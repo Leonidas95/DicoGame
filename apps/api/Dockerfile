@@ -14,7 +14,9 @@ WORKDIR /app
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/package-lock.json ./package-lock.json
 COPY --from=builder /app/turbo.json ./turbo.json
+COPY --from=builder /app/apps/api/prisma ./prisma
 RUN npm ci
+RUN npm run prisma generate
 
 FROM node:18-alpine AS sourcer
 WORKDIR /app
