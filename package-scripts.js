@@ -10,11 +10,11 @@ module.exports = {
   scripts: {
     prepare: {
       default: 'nps prepare.web prepare.api',
-      api: 'nps prepare.docker prisma.migrate.dev',
+      api: 'nps prepare.docker prisma.migrate.dev prisma.seed',
       web: 'npm ci',
       docker: 'docker-compose --env-file ./apps/api/.env up -d',
       ci: {
-        api: 'npx turbo prune --scope=api && cd out && npm ci && nps prisma.generate',
+        api: 'npx turbo prune --scope=api && cd out && npm ci && nps prisma.generate && nps prisma.seed',
         web: 'npx turbo prune --scope=web && cd out && npm ci',
       },
     },
@@ -39,6 +39,7 @@ module.exports = {
       migrate: {
         dev: `cd ${apiPath} && npx prisma migrate dev`,
       },
+      seed: `cd ${apiPath} && npx prisma db seed`,
     },
     build: {
       default: 'npx turbo run build',
