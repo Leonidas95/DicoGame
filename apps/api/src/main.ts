@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
@@ -8,6 +8,8 @@ async function bootstrap() {
   const PORT = 3001;
   const logger = new Logger('EntryPoint');
   const app = await NestFactory.create(AppModule);
+
+  app.useGlobalPipes(new ValidationPipe());
   await app.listen(PORT);
 
   if (module.hot) {
