@@ -16,6 +16,7 @@ model Language {
   name      String   @db.VarChar(30)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  words     Word[]
 }
 
 enum Role {
@@ -31,4 +32,14 @@ model Person {
   role      Role     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Word {
+  id         String   @id @default(uuid()) @db.VarChar(36)
+  name       String   @db.VarChar(50)
+  definition String   @db.VarChar(300)
+  language   Language @relation(fields: [languageId], references: [id])
+  languageId String   @db.VarChar(36)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
