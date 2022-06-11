@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import * as Yup from 'yup';
 
@@ -10,6 +11,7 @@ type SignUpStatus = 'init' | 'loading' | 'success' | 'email_exists' | 'username_
 const SignUp = () => {
   const { signUp } = useSignUp();
   const [signUpStatus, setSignUpStatus] = useState<SignUpStatus>('init');
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -34,7 +36,9 @@ const SignUp = () => {
       setSignUpStatus('loading');
       try {
         const token = await signUp(values);
+        localStorage.setItem('token', token);
         setSignUpStatus('success');
+        router.push('/');
       } catch (error) {
         if (error === 'EMAIL_EXISTS') setSignUpStatus('email_exists');
         else if (error === 'USERNAME_EXISTS') setSignUpStatus('username_exists');

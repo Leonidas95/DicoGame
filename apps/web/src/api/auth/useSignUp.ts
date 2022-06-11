@@ -23,6 +23,7 @@ export const useSignUp = () => {
       if (error instanceof AxiosError) {
         throw error.response?.data.message;
       }
+      throw Error();
     }
   }, []);
 

@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import * as Yup from 'yup';
 
@@ -10,6 +11,7 @@ type SignInStatus = 'init' | 'loading' | 'success' | 'bad_credentials' | 'error'
 const SignIn = () => {
   const { signIn } = useSignIn();
   const [signInStatus, setSignInStatus] = useState<SignInStatus>('init');
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -24,7 +26,9 @@ const SignIn = () => {
       setSignInStatus('loading');
       try {
         const token = await signIn(values);
+        localStorage.setItem('token', token);
         setSignInStatus('success');
+        router.push('/');
       } catch (error) {
         error === 'BAD_CREDENTIALS' ? setSignInStatus('bad_credentials') : setSignInStatus('error');
       }
