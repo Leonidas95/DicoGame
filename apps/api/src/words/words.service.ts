@@ -9,11 +9,14 @@ export class WordsService {
   constructor(private readonly databaseService: DatabaseService) {}
 
   async getWords(): Promise<Word[]> {
-    return this.databaseService.word.findMany({ include: { language: true } });
+    return this.databaseService.word.findMany({ include: { language: true, wordDefinitions: true } });
   }
 
   async getWord(id: string): Promise<Word> {
-    const word = await this.databaseService.word.findFirst({ where: { id }, include: { language: true } });
+    const word = await this.databaseService.word.findFirst({
+      where: { id },
+      include: { language: true, wordDefinitions: true },
+    });
 
     if (!word) {
       throw new WordNotFound();
