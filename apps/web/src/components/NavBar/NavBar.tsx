@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 import { NavBarItem, NavBarItemProps } from './components/NavBarItem';
-import { Dropdown } from 'components/Dropdown/Dropdown';
-import { DropdownItemProps } from 'components/Dropdown/components/DropDownItem';
+import { Dropdown } from 'components/Dropdown';
+import { DropdownItemProps } from 'components/Dropdown/components/DropdownItem';
 
 export const NavBar = () => {
   const navBarItems: NavBarItemProps[] = [

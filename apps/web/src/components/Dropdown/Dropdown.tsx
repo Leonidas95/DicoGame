@@ -1,7 +1,7 @@
 import { ChevronIcon } from 'assets/icons/ChevronIcon';
 import { useCallback, useState } from 'react';
 
-import { DropdownItem, DropdownItemProps } from './components/DropDownItem';
+import { DropdownItemProps, DropdownItem } from './components/DropdownItem';
 
 type DropdownProps = {
   label: string;
