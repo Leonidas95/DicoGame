@@ -7,9 +7,10 @@ import { LanguagesModule } from './languages/languages.module';
 import { PersonsModule } from './persons/persons.module';
 import { AuthModule } from './auth/auth.module';
 import { WordsModule } from './words/words.module';
+import { LobbiesModule } from './lobbies/lobbies.module';
 
 @Module({
-  imports: [DatabaseModule, LanguagesModule, PersonsModule, AuthModule, WordsModule],
+  imports: [DatabaseModule, LanguagesModule, PersonsModule, AuthModule, WordsModule, LobbiesModule],
   controllers: [AppController],
   providers: [AppService],
 })
