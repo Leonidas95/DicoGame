@@ -1,13 +1,17 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { WinstonModule } from 'nest-winston';
 
 import { AppModule } from './app.module';
+import { transportsSetup } from './common/helpers/logger.helper';
 import { DatabaseService } from './database/database.service';
 
-async function bootstrap() {
+const bootstrap = async () => {
   const PORT = 3001;
-  const logger = new Logger('EntryPoint');
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: WinstonModule.createLogger({ transports: transportsSetup() }),
+  });
+  const logger = new Logger('Bootstrap');
 
   app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
@@ -18,5 +22,6 @@ async function bootstrap() {
   await app.listen(PORT);
 
   logger.log(`Server running on http://localhost:${PORT}`);
-}
+};
+
 bootstrap();

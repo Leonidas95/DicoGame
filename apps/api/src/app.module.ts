@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -12,6 +12,6 @@ import { LobbiesModule } from './lobbies/lobbies.module';
 @Module({
   imports: [DatabaseModule, LanguagesModule, PersonsModule, AuthModule, WordsModule, LobbiesModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [Logger, AppService],
 })
 export class AppModule {}
