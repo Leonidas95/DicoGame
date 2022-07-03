@@ -5,6 +5,10 @@ export class CreateLobbyDto {
   @Length(1, 40)
   name: string;
 
+  @IsString()
+  @Length(1, 30)
+  playerName: string;
+
   @IsInt()
   @Min(2)
   @Max(10)
@@ -23,5 +27,6 @@ export class CreateLobbyDto {
     this.maxPlayers = data.maxPlayers;
     this.rounds = data.rounds;
     this.isPrivate = data.isPrivate;
+    this.playerName = data.playerName;
   }
 }

@@ -4,14 +4,14 @@ import { Socket } from 'socket.io';
 export class Player {
   private readonly _id: string;
   private readonly _socket: Socket;
-  private readonly _displayName: string;
+  private readonly _name: string;
   private _person?: Person;
   private _score: number;
 
-  constructor(socket: Socket, { displayName }) {
+  constructor(socket: Socket, { playerName }) {
     this._id = socket.id;
     this._socket = socket;
-    this._displayName = displayName;
+    this._name = playerName;
   }
 
   public get id(): string {
@@ -22,8 +22,8 @@ export class Player {
     return this._socket;
   }
 
-  public get displayName(): string {
-    return this._displayName;
+  public get name(): string {
+    return this._name;
   }
 
   public get score(): number {

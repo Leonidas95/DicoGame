@@ -27,6 +27,7 @@ export class Lobby extends EventEmitter {
     this._isPrivate = isPrivate;
     this._rounds = [];
     this._players = [];
+    this._logger.debug(`New Lobby [${this._id}]`);
   }
 
   public get id(): string {
@@ -86,7 +87,7 @@ export class Lobby extends EventEmitter {
     this.emit('closed');
   }
 
-  addPlayer(socket: Socket, data: JoinLobbyDto) {
+  addPlayer(data: JoinLobbyDto, socket: Socket) {
     this._logger.debug(`New player [${socket.id}] in lobby [${this._id}]`);
     socket.join(this._id);
 

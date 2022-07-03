@@ -7,10 +7,10 @@ export class JoinLobbyDto {
 
   @IsString()
   @Length(1, 30)
-  displayName: string;
+  playerName: string;
 
   constructor(data: any) {
     this.id = data.id;
-    this.displayName = data.displayName;
+    this.playerName = data.playerName;
   }
 }

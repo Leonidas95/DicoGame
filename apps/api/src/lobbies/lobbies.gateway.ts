@@ -42,7 +42,7 @@ export class LobbiesGateway implements OnGatewayConnection {
 
     switch (method) {
       case 'createLobby':
-        return this.lobbiesService.createLobby(new CreateLobbyDto(data));
+        return this.lobbiesService.createLobby(new CreateLobbyDto(data), socket);
       case 'joinLobby':
         return this.lobbiesService.joinLobby(new JoinLobbyDto(data), socket);
     }
@@ -57,7 +57,7 @@ export class LobbiesGateway implements OnGatewayConnection {
     if (lobby && player) {
       socket
         .to(lobby.id)
-        .emit('notification', { event: 'playerLeft', data: { id: player.id, displayName: player.displayName } });
+        .emit('notification', { event: 'playerLeft', data: { id: player.id, playerName: player.name } });
 
       lobby.deletePlayer(socket.id);
 

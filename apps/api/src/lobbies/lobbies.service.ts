@@ -25,7 +25,7 @@ export class LobbiesService {
     return this._lobbies.get(id);
   }
 
-  createLobby({ name, maxPlayers, isPrivate }: CreateLobbyDto) {
+  createLobby({ name, maxPlayers, isPrivate, playerName }: CreateLobbyDto, socket: Socket) {
     const lobby = new Lobby(name, maxPlayers, isPrivate);
 
     lobby.on('close', () => {
@@ -34,6 +34,8 @@ export class LobbiesService {
 
     this._lobbies.set(lobby.id, lobby);
 
+    lobby.addPlayer({ playerName, id: lobby.id }, socket);
+
     return lobby;
   }
 
@@ -41,7 +43,7 @@ export class LobbiesService {
     const lobby = this.getLobby(dto.id);
 
     if (lobby) {
-      lobby.addPlayer(socket, dto);
+      lobby.addPlayer(dto, socket);
     }
   }
 }
