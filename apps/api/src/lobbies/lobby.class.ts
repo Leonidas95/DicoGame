@@ -1,27 +1,41 @@
+import { EventEmitter } from 'events';
+import { Socket } from 'socket.io';
+import { JoinLobbyDto } from './dto/join-lobby.dto';
+
+import { Player } from './players/player.class';
 import { Round } from './rounds/round.class';
 
-export class Lobby {
-  private _id: string;
-  private _key: string;
+export class Lobby extends EventEmitter {
+  private readonly _id: string;
+  private _closed: boolean;
   private _name: string;
   private _maxPlayers: number;
   private _isPrivate: boolean;
   private _rounds: Round[];
+  private _players: Player[];
+
+  constructor(name: string, maxPlayers: number, isPrivate: boolean) {
+    super();
+    this.setMaxListeners(Infinity);
+    this._id = Math.random().toString(36).substring(2, 7).toLowerCase();
+    this._closed = false;
+    this._name = name;
+    this._maxPlayers = maxPlayers;
+    this._isPrivate = isPrivate;
+    this._rounds = [];
+    this._players = [];
+  }
 
   public get id(): string {
     return this._id;
   }
 
-  public set id(value: string) {
-    this._id = value;
+  public get closed(): boolean {
+    return this._closed;
   }
 
-  public get key(): string {
-    return this._key;
-  }
-
-  public set key(value: string) {
-    this._key = value;
+  public set closed(value: boolean) {
+    this._closed = value;
   }
 
   public get name(): string {
@@ -54,5 +68,31 @@ export class Lobby {
 
   public set rounds(value: Round[]) {
     this._rounds = value;
+  }
+
+  public get players(): Player[] {
+    return this._players;
+  }
+  public set players(value: Player[]) {
+    this._players = value;
+  }
+
+  close() {
+    this._closed = true;
+    this.emit('closed');
+  }
+
+  addPlayer(socket: Socket, data: JoinLobbyDto) {
+    socket.join(this._id);
+
+    this._players.push(new Player(socket, data));
+  }
+
+  deletePlayer(playerId: string) {
+    const index = this._players.findIndex(({ id }) => playerId === id);
+
+    if (index !== -1) {
+      this.players.splice(index, 1);
+    }
   }
 }

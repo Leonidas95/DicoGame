@@ -26,6 +26,8 @@
     "@nestjs/jwt": "^8.0.1",
     "@nestjs/passport": "^8.2.2",
     "@nestjs/platform-express": "^8.4.7",
+    "@nestjs/platform-socket.io": "^8.4.7",
+    "@nestjs/websockets": "^8.4.7",
     "@prisma/client": "^4.0.0",
     "argon2": "^0.28.5",
     "class-transformer": "^0.5.1",
